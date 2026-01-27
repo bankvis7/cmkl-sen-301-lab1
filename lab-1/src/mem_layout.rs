@@ -33,7 +33,7 @@ pub fn run() {
     // fatal runtime error: stack overflow, aborting
     // zsh: abort      cargo run -- mem_layout
 
-    //test_recurse();
+    //_test_recurse();
 
 }
 
@@ -50,8 +50,8 @@ fn test_fn_2() {
     println!("fn 2:\t {:p}", &x_2);
 }
 
-fn test_recurse() {
+fn _test_recurse() {
     if true {
-        test_recurse()
+        _test_recurse()
     }
 }
