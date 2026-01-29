@@ -33,7 +33,7 @@ pub fn run() {
     // fatal runtime error: stack overflow, aborting
     // zsh: abort      cargo run -- mem_layout
 
-    //test_recurse();
+    test_recurse();
 
 }
 

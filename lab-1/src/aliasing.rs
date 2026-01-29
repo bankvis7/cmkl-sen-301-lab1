@@ -21,7 +21,9 @@ pub enum PowError {
 unsafe fn pow(src: *const u64, dst: *mut u64, p: u32) -> Result<(), PowError> {
     // BUG: assumes src and dst are distinct.
     // TODO: if src == dst, return Err(PowError::AliasingNotAllowed) and do not write anything.
-
+    if src == dst {
+        return Err(PowError::AliasingNotAllowed);
+    }
     unsafe {
         *dst = 1;
         for _ in 0..p {
@@ -43,10 +45,10 @@ pub fn run() {
     println!("(aliased): res={:?}, same={}", r_bad, same);
 
     // TODO: Add a correct call where src and dst are distinct, e.g.:
-    // let base: u64 = 3;
-    // let mut out: u64 = 0;
-    // let r_ok = unsafe { pow(&base as *const u64, &mut out as *mut u64, p) };
-    // println!("(distinct): res={:?}, base={}, out={}", r_ok, base, out);
+    let base: u64 = 3;
+    let mut out: u64 = 0;
+    let r_ok = unsafe { pow(&base as *const u64, &mut out as *mut u64, p) };
+    println!("(distinct): res={:?}, base={}, out={}", r_ok, base, out);
 
     // Expected behavior after student fix:
     // - aliased call returns Err(PowError::AliasingNotAllowed)

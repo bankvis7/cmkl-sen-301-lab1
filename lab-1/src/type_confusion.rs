@@ -29,7 +29,7 @@ pub fn run() {
     unsafe {
         // BUG: allocate too little memory (only enough for a u64).
         // TODO: change this to Layout::new::<Node>()
-        let layout = Layout::new::<u64>();
+        let layout = Layout::new::<Node>();
         let p = alloc(layout) as *mut Node;
         if p.is_null() {
             panic!("alloc failed");
