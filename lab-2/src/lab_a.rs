@@ -67,7 +67,9 @@ fn format_box_chain(head: &BoxNode) -> String {
 /// STUDENT TODO A1:
 /// Mutate the second node's value.
 fn set_second_value_box(head: &mut BoxNode, new_value: &str) {
-    todo!("Implement Box mutation: set second node's value");
+    if let Some(second) = head.next.as_mut() {
+        second.value = new_value.to_string();
+    }
 }
 
 // ----------------------------
@@ -133,5 +135,8 @@ fn demo_rc_nodes_refcount_outlives_scope() {
 /// Return:
 /// - the cloned Rc handle
 fn clone_b_and_print_counts(node_b: &Rc<RcNode>) -> Rc<RcNode> {
-    todo!("Implement Rc clone + strong_count prints");
+    println!("strong_count before cloning: {}", Rc::strong_count(node_b));
+    let external = node_b.clone();
+    println!("strong_count after cloning: {}", Rc::strong_count(node_b));
+    external
 }

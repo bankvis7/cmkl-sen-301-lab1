@@ -42,13 +42,13 @@ impl Node {
     /// STUDENT TODO C1:
     /// Return next node as Option<Rc<RefCell<Node>>> (clone the Rc).
     fn next(&self) -> Option<NodeRef> {
-        todo!("Implement next(): clone Rc handle from self.next");
+        self.next.clone()
     }
 
     /// STUDENT TODO C1:
     /// Return prev node as Option<Rc<RefCell<Node>>> by upgrading Weak.
     fn prev(&self) -> Option<NodeRef> {
-        todo!("Implement prev(): upgrade Weak from self.prev");
+        self.prev.as_ref().and_then(|weak| weak.upgrade())
     }
 }
 
@@ -63,7 +63,8 @@ impl Node {
 /// - Keep borrow_mut scopes short.
 /// - Do not hold two mutable borrows at the same time.
 fn link(a: &NodeRef, b: &NodeRef) {
-    todo!("Implement link(a,b) with Rc and Weak");
+    a.borrow_mut().next = Some(b.clone());
+    b.borrow_mut().prev = Some(Rc::downgrade(a));
 }
 
 fn demo_two_node_dll() {
