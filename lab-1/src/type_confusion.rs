@@ -33,30 +33,16 @@ union RawNumber {
 pub fn run() {
     println!("\n== type confusion: union without a tag ==");
 
-    unsafe {
-        // A vector storing logically different types using a union.
-        let values: Vec<RawNumber> = vec![
-            RawNumber { i: 42 },
-            RawNumber { f: 3.5 },
-            RawNumber { i: -7 },
-        ];
+    let values: Vec<Number> = vec![
+        Number::Int(42),
+        Number::Float(3.5),
+        Number::Int(-7),
+    ];
 
-        // BUG: blindly read every element as f64,
-        for (idx, v) in values.iter().enumerate() {
-            let x: f64 = v.f;
-            println!("values[{}] read as f64 = {}", idx, x);
+    for v in values {
+        match v {
+            Number::Int(x) => println!("Int  = {}", x),
+            Number::Float(x) => println!("Float = {}", x),
         }
     }
-
-    // TODO:
-    //   - Change Vec<RawNumber> to Vec<Number>
-    //   - Store values as Number::Int / Number::Float
-    //   - Replace the unsafe loop with:
-    //
-    //     for v in values {
-    //         match v {
-    //             Number::Int(x) => println!("Int  = {}", x),
-    //             Number::Float(x) => println!("Float = {}", x),
-    //         }
-    //     }
 }

@@ -72,10 +72,10 @@ impl Buffer {
     ///   - otherwise write and return Ok(())
     pub fn write(&mut self, index: usize, value: u8) -> Result<(), BufferError> {
         unsafe {
-            if index > self.len() {
+            if index >= self.len() {
                 return Err(BufferError::OutOfBounds { index, len: self.len });
             }
-            *self.base.add(index) = value; // BUG: may be OOB
+            *self.base.add(index) = value;
             Ok(())
         }
     }
